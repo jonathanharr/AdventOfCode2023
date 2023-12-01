@@ -1,26 +1,23 @@
 def get_calibration_values(input_string):
-    first_digit_found = False
-    first_digit = 0
-    last_digit = 0
-    for i in range(len(input_string)):
-        if (input_string[i].isdigit()) and (first_digit_found is False):
-            first_digit = input_string[i]
+    digits = [char for char in input_string if char.isdigit()]
 
-            first_digit_found = True
-
-        if (input_string[i].isdigit()) and (first_digit_found is True):
-            last_digit = input_string[i]
-
-    total = int(first_digit + last_digit)
-    return total
+    if digits:
+        return int(digits[0] + digits[-1])
+    else:
+        return 0
 
 
 def main():
     sum_of_calibration_values = 0
     file_name = 'input.txt'
-    with open(file_name, 'r') as file:
-        for line in file:
-            sum_of_calibration_values += get_calibration_values(line)
+
+    try:
+        with open(file_name, 'r') as file:
+            for line in file:
+                sum_of_calibration_values += get_calibration_values(line)
+    except FileNotFoundError:
+        print(f"File not found: {file_name}")
+        return
 
     print(sum_of_calibration_values)
 
